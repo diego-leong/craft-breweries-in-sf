@@ -56,6 +56,7 @@ function toCommas(value) {
   return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+  //SPECIFIC TO 
 // changes the comma in the string into a list item <li>
 function formattedString(value) {
   return value.split(",").join("<li>");
@@ -103,7 +104,7 @@ function stars(rating) {
   }
 }
 
-
+  //NOT USED IN DANIELA CODE
 // Create a MediaQueryList object
 var x = window.matchMedia("(max-width: 1100px)");
 
