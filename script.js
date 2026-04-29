@@ -103,24 +103,6 @@ function stars(rating) {
   }
 }
 
-// function to remove search bar in detail view
-function myFunction() {
-  let x = document.getElementById("hide");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-}
-
-//function to hide search bar for mobile devices
-function myNeighborhood(x) {
-  let n = document.getElementById("hide");
-  if (x.matches) {
-    // If media query matches
-    n.style.display = "none";
-  }
-}
 
 // Create a MediaQueryList object
 var x = window.matchMedia("(max-width: 1100px)");
@@ -130,45 +112,6 @@ x.addEventListener("change", function () {
   myFunction(x);
 });
 
-//function for the dropdown menu
-async function dropdown() {
-  let dropdown = document.getElementById("menu");
-
-  const options = {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer pateG7pBF1CkfmcW7.2c666498dc7818660958fea1c0bb95e5e1d33bbdb4871fed8ee5696394e05ce5`,
-    },
-  };
-
-  await fetch(
-    `https://api.airtable.com/v0/app4d1fvvjII8WH8W/Breweries?&view=Stars`,
-    options
-  )
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data); // response is an object w/ .records array
-
-      dropdown.innerHTML = "";
-
-      let otherHtml = "";
-      for (let i = 0; i < data.records.length; i++) {
-        let name = data.records[i].fields["Name"];
-        let disabled = data.records[i].fields["Disabled"];
-
-        otherHtml += `
-    <li class="bullet">
-                    <a
-                      class="dropdown-item"
-                      href="breweries.html?id=${data.records[i].id}">${name}</a
-                    >
-                  </li>
-    `;
-
-        dropdown.innerHTML = otherHtml;
-      }
-    });
-}
 
 // function for our detail view
 async function getOneRecord(id) {
@@ -316,16 +259,9 @@ function searchFunction() {
 // ["?id=", "receHhOzntTGZ44I5"] and then we only choose the second one
 let idParams = window.location.search.split("?id=");
 if (idParams.length >= 2) {
-  // call function to hide search bar
-  myFunction();
-  // has at least ["?id=", "OUR ID"]
-  // call function for the dropdown menu
-  dropdown();
+
   getOneRecord(idParams[1]); // create detail view HTML w/ our id
 } else {
-  // Call listener function to hide search bar for mobile devices
-  myNeighborhood(x);
-  // call function for the dropdown menu
-  dropdown();
+
   getAllRecords(); // no id given, fetch summaries
 }
